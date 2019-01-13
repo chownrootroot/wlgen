@@ -2,15 +2,12 @@
 # Wordlist generator
 # ------------------------------
 
-def dupeok( str ):
-	iExists = 0
-	for x in lstrMain:
-		if x == str:
-			iExists = 1
-	if iExists == 0:
-		return True;
-	else:
-		return False;
+def remove(duplicate): 
+    final_list = [] 
+    for str in duplicate: 
+        if str not in final_list: 
+            final_list.append(str) 
+    return final_list 
 
 strFirstName = ""
 strLastName = ""
@@ -183,30 +180,24 @@ lstrMain = []
 # Combine dates and names
 for x in lstrNames:
 	for y in lstrDates:
-#		if dupeok(x):
 		lstrMain.append(x)
-#		if dupeok(x.upper()):
 		lstrMain.append(x.upper())
-#		if dupeok(x.lower()):
 		lstrMain.append(x.lower())
-#		if dupeok(y):
 		lstrMain.append(y)
-#		if dupeok(y.upper()):
 		lstrMain.append(y.upper())
-#		if dupeok(y.lower):
 		lstrMain.append(y.lower())
-#		if dupeok(y + x):
 		lstrMain.append(y + x)
-#		if dupeok(y + x.upper()):
 		lstrMain.append(y + x.upper())
-#		if dupeok(y + x.lower()):
 		lstrMain.append(y + x.lower())
-#		if dupeok(x + y):
 		lstrMain.append(x + y)
-#		if dupeok(x.upper() + y):
 		lstrMain.append(x.upper() + y)
-#		if dupeok(x.lower() + y):
 		lstrMain.append(x.lower() + y)
+
+# Remove duplicates
+strAnswer = raw_input("Remove duplicates? Execution will take longer. <y/n>: ")
+if strAnswer.lower() == "y":
+	lstrMain = remove(lstrMain)
+
 # ------------------------------
 # Write to file 
 # ------------------------------
