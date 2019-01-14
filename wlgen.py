@@ -2,45 +2,68 @@
 # Wordlist generator
 # ------------------------------
 
+import time
+import sys
+
 def remove(duplicate): 
-    final_list = [] 
-    for str in duplicate: 
-        if str not in final_list: 
-            final_list.append(str) 
+    final_list = []
+    iCurrent = 0
+    iLength = len(duplicate) 
+    sys.stdout.write("Removing duplicates from wordlist...\n")
+    for strng in duplicate:
+        iCurrent += 1
+        iPercent = (iCurrent * 100) / iLength
+        sys.stdout.write("\r%d%%" % iPercent)  
+        sys.stdout.flush()
+#        sys.stdout.write("Progress: " + str(iPercent) + "\n")
+        if strng not in final_list: 
+            final_list.append(strng) 
     return final_list 
 
+# ------------------------------
+# Declarations
+# ------------------------------
 strFirstName = ""
 strLastName = ""
 strYear = ""
 strMonth = ""
 strDay = ""
+strLast4 = ""
 strPartnerFirstName = ""
 strPartnerLastName = ""
 strPartnerYear = ""
 strPartnerMonth = ""
 strPartnerDay = ""
+strPartnerLast4 = ""
 strChild1FirstName = ""
 strChild1LastName = ""
 strChild1Year = ""
 strChild1Month = ""
 strChild1Day = ""
+strChild1Last4 = ""
 strChild2FirstName = ""
 strChild2LastName = ""
 strChild2Year = ""
 strChild2Month = ""
 strChild2Day = ""
+strChild2Last4 = ""
 strChild3FirstName = ""
 strChild3LastName = ""
 strChild3Year = ""
 strChild3Month = ""
 strChild3Day = ""
+strChild3Last4 = ""
+lstrCustomWords = []
 
-# Get input from user
+# ------------------------------
+# User input
+# ------------------------------
 strFirstName = raw_input("Subjects first name: ")
 strLastName = raw_input("Subjects last name: ")
 strYear = raw_input("Subjects year of birth: ")
 strMonth = raw_input("Subjects month of birth: ")
 strDay = raw_input("Subjects day of birth: ")
+strLast4 = raw_input("Subjects last four digits (swe personnr): ")
 
 strAnswer = "n"
 strAnswer = raw_input("Partner? <y/n>: ")
@@ -50,6 +73,7 @@ if strAnswer.lower() == "y":
 	strPartnerYear = raw_input("Partners year of birth: ")
 	strPartnerMonth = raw_input("Partners month of birth: ")
 	strPartnerDay = raw_input("Partners day of birth: ")
+	strPartnerLast4 = raw_input("Partners last four digits (swe personnr): ")
 
 strAnswer = "n"
 strAnswer = raw_input("Child? <y/n>: ")
@@ -59,6 +83,7 @@ if strAnswer.lower() == "y":
 	strChild1Year = raw_input("Childs year of birth: ")
 	strChild1Month = raw_input("Childs month of birth: ")
 	strChild1Day = raw_input("Childs day of birth: ")
+	strChild1Last4 = raw_input("Childs last four digits (swe personnr): ")
 
 	strAnswer = "n"
 	strAnswer = raw_input("Another child? <y/n>: ")
@@ -68,6 +93,7 @@ if strAnswer.lower() == "y":
 		strChild2Year = raw_input("Childs year of birth: ")
 		strChild2Month = raw_input("Childs month of birth: ")
 		strChild2Day = raw_input("Childs day of birth: ")
+		strChild2Last4 = raw_input("Childs last four digits (swe personnr): ")
 
 		strAnswer = "n"
 		strAnswer = raw_input("Another child? <y/n>: ")
@@ -77,7 +103,14 @@ if strAnswer.lower() == "y":
 			strChild3Year = raw_input("Childs year of birth: ")
 			strChild3Month = raw_input("Childs month of birth: ")
 			strChild3Day = raw_input("Childs day of birth: ")
+			strChild3Last4 = raw_input("Childs last four digits (swe personnr): ")
 
+while strAnswer != "":
+	strAnswer = raw_input("Add more words! Idols etc..: ")
+	if strAnswer.lower() != "":
+		if strAnswer not in lstrCustomWords:
+			lstrCustomWords.append(strAnswer)
+	
 # ------------------------------
 # Add to names wordlist
 # ------------------------------
@@ -88,36 +121,48 @@ tempNames2 = [] # Temporary clone 2
 tempNames3 = [] # Result list -> main
 
 # Manual add user strings
-if strFirstName != "":
+if strFirstName != "" and strFirstName not in lstrNames:
 	lstrNames.append(strFirstName)
-if strLastName != "":
+if strLastName != "" and strLastName not in lstrNames:
 	lstrNames.append(strLastName)
-if strPartnerFirstName != "":
+if strPartnerFirstName != "" and strPartnerFirstName not in lstrNames:
 	lstrNames.append(strPartnerFirstName)
-if strPartnerLastName != "":
+if strPartnerLastName != "" and strPartnerLastName not in lstrNames:
 	lstrNames.append(strPartnerLastName)
-if strChild1FirstName != "":
+if strChild1FirstName != "" and strChild1FirstName not in lstrNames:
 	lstrNames.append(strChild1FirstName)
-if strChild1LastName != "":
+if strChild1LastName != "" and strChild1LastName not in lstrNames:
 	lstrNames.append(strChild1LastName)
-if strChild2FirstName != "":
+if strChild2FirstName != "" and strChild2FirstName not in lstrNames:
 	lstrNames.append(strChild2FirstName)
-if strChild2LastName != "":
+if strChild2LastName != "" and strChild2LastName not in lstrNames:
 	lstrNames.append(strChild2LastName)
-if strChild3FirstName != "":
+if strChild3FirstName != "" and strChild3FirstName not in lstrNames:
 	lstrNames.append(strChild3FirstName)
-if strChild3LastName != "":
+if strChild3LastName != "" and strChild3LastName not in lstrNames:
 	lstrNames.append(strChild3LastName)
+if len(lstrCustomWords) > 0:
+	lstrNames = lstrNames + lstrCustomWords
 
 # Add combinations
+tempCaseNames = []
+for x in lstrNames:
+	if x.upper() not in tempCaseNames:
+		tempCaseNames.append(x.upper())
+	if x.lower() not in tempCaseNames:
+		tempCaseNames.append(x.lower())
+lstrNames = lstrNames + tempCaseNames
+
 tempNames1 = lstrNames
 tempNames2 = lstrNames
 
 for x in tempNames1:
 	for y in tempNames2:
 		if x != y:
-			tempNames3.append(x + y)
-			tempNames3.append(y + x)
+			if str(x + y) not in tempNames3:
+				tempNames3.append(x + y)
+			if str(y + x) not in tempNames3:
+				tempNames3.append(y + x)
 lstrNames = lstrNames + tempNames3
 
 # ------------------------------
@@ -130,36 +175,46 @@ tempDates2 = [] # Temporary clone 2
 tempDates3 = [] # Result list -> main
 
 # Manual add user strings
-if strYear != "":
+if strYear != "" and strYear not in lstrDates:
 	lstrDates.append(strYear)
-if strMonth != "":
+if strMonth != "" and strMonth not in lstrDates:
 	lstrDates.append(strMonth)
-if strDay != "":
+if strDay != "" and strDay not in lstrDates:
 	lstrDates.append(strDay)
-if strPartnerYear != "":
+if strLast4 != "" and strLast4 not in lstrDates:
+	lstrDates.append(strLast4)
+if strPartnerYear != "" and strPartnerYear not in lstrDates:
 	lstrDates.append(strPartnerYear)
-if strPartnerMonth != "":
+if strPartnerMonth != "" and strPartnerMonth not in lstrDates:
 	lstrDates.append(strPartnerMonth)
-if strPartnerDay != "":
+if strPartnerDay != "" and strPartnerDay not in lstrDates:
 	lstrDates.append(strPartnerDay)
-if strChild1Year != "":
+if strPartnerLast4 != "" and strPartnerLast4 not in lstrDates:
+	lstrDates.append(strPartnerLast4)
+if strChild1Year != "" and strChild1Year not in lstrDates:
 	lstrDates.append(strChild1Year)
-if strChild1Month != "":
+if strChild1Month != "" and strChild1Month not in lstrDates:
 	lstrDates.append(strChild1Month)
-if strChild1Day != "":
+if strChild1Day != "" and strChild1Day not in lstrDates:
 	lstrDates.append(strChild1Day)
-if strChild2Year != "":
+if strChild1Last4 != "" and strChild1Last4 not in lstrDates:
+	lstrDates.append(strChild1Last4)
+if strChild2Year != "" and strChild2Year not in lstrDates:
 	lstrDates.append(strChild2Year)
-if strChild2Month != "":
+if strChild2Month != "" and strChild2Month not in lstrDates:
 	lstrDates.append(strChild2Month)
-if strChild2Day != "":
+if strChild2Day != "" and strChild2Day not in lstrDates:
 	lstrDates.append(strChild2Day)
-if strChild3Year != "":
+if strChild2Last4 != "" and strChild2Last4 not in lstrDates:
+	lstrDates.append(strChild2Last4)
+if strChild3Year != "" and strChild3Year not in lstrDates:
 	lstrDates.append(strChild3Year)
-if strChild3Month != "":
+if strChild3Month != "" and strChild3Month not in lstrDates:
 	lstrDates.append(strChild3Month)
-if strChild3Day != "":
+if strChild3Day != "" and strChild3Day not in lstrDates:
 	lstrDates.append(strChild3Day)
+if strChild3Last4 != "" and strChild3Last4 not in lstrDates:
+	lstrDates.append(strChild3Last4)
 
 # Add combinations
 tempDates1 = lstrDates
@@ -168,8 +223,10 @@ tempDates2 = lstrDates
 for x in tempDates1:
 	for y in tempDates2:
 		if x != y:
-			tempDates3.append(x + y)
-			tempDates3.append(y + x)
+			if str(x + y) not in tempDates3:
+				tempDates3.append(x + y)
+			if str(y + x) not in tempDates3:
+				tempDates3.append(y + x)
 lstrDates = lstrDates + tempDates3
 
 # ------------------------------
@@ -181,23 +238,17 @@ lstrMain = []
 for x in lstrNames:
 	for y in lstrDates:
 		lstrMain.append(x)
-		lstrMain.append(x.upper())
-		lstrMain.append(x.lower())
 		lstrMain.append(y)
-		lstrMain.append(y.upper())
-		lstrMain.append(y.lower())
 		lstrMain.append(y + x)
-		lstrMain.append(y + x.upper())
-		lstrMain.append(y + x.lower())
 		lstrMain.append(x + y)
-		lstrMain.append(x.upper() + y)
-		lstrMain.append(x.lower() + y)
 
 # Remove duplicates
-strAnswer = raw_input("Remove duplicates? Execution will take longer. <y/n>: ")
+strAnswer = raw_input("Remove duplicates? Will take a LONG time... <y/n>: ")
 if strAnswer.lower() == "y":
 	lstrMain = remove(lstrMain)
-
+	sys.stdout.write("\n")
+else:
+	sys.stdout.write("Duplicates can be removed using <sort " + strFirstName + "_wordlist.txt | uniq | tee sorted_wordlist.txt>\n")
 # ------------------------------
 # Write to file 
 # ------------------------------
