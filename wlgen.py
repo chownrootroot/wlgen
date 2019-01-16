@@ -58,55 +58,55 @@ lstrCustomWords = []
 # ------------------------------
 # User input
 # ------------------------------
-strFirstName = raw_input("Subjects first name: ")
-strLastName = raw_input("Subjects last name: ")
-strYear = raw_input("Subjects year of birth: ")
-strMonth = raw_input("Subjects month of birth: ")
-strDay = raw_input("Subjects day of birth: ")
-strLast4 = raw_input("Subjects last four digits (swe personnr): ")
+strFirstName = input("Subjects first name: ")
+strLastName = input("Subjects last name: ")
+strYear = input("Subjects year of birth: ")
+strMonth = input("Subjects month of birth: ")
+strDay = input("Subjects day of birth: ")
+strLast4 = input("Subjects last four digits (swe personnr): ")
 
 strAnswer = "n"
-strAnswer = raw_input("Partner? <y/n>: ")
+strAnswer = input("Partner? <y/n>: ")
 if strAnswer.lower() == "y": 
-	strPartnerFirstName = raw_input("Partners first name: ")
-	strPartnerLastName = raw_input("Partners last name: ")
-	strPartnerYear = raw_input("Partners year of birth: ")
-	strPartnerMonth = raw_input("Partners month of birth: ")
-	strPartnerDay = raw_input("Partners day of birth: ")
-	strPartnerLast4 = raw_input("Partners last four digits (swe personnr): ")
+	strPartnerFirstName = input("Partners first name: ")
+	strPartnerLastName = input("Partners last name: ")
+	strPartnerYear = input("Partners year of birth: ")
+	strPartnerMonth = input("Partners month of birth: ")
+	strPartnerDay = input("Partners day of birth: ")
+	strPartnerLast4 = input("Partners last four digits (swe personnr): ")
 
 strAnswer = "n"
-strAnswer = raw_input("Child? <y/n>: ")
+strAnswer = input("Child? <y/n>: ")
 if strAnswer.lower() == "y": 
-	strChild1FirstName = raw_input("Childs first name: ")
-	strChild1LastName = raw_input("Childs last name: ")
-	strChild1Year = raw_input("Childs year of birth: ")
-	strChild1Month = raw_input("Childs month of birth: ")
-	strChild1Day = raw_input("Childs day of birth: ")
-	strChild1Last4 = raw_input("Childs last four digits (swe personnr): ")
+	strChild1FirstName = input("Childs first name: ")
+	strChild1LastName = input("Childs last name: ")
+	strChild1Year = input("Childs year of birth: ")
+	strChild1Month = input("Childs month of birth: ")
+	strChild1Day = input("Childs day of birth: ")
+	strChild1Last4 = input("Childs last four digits (swe personnr): ")
 
 	strAnswer = "n"
-	strAnswer = raw_input("Another child? <y/n>: ")
+	strAnswer = input("Another child? <y/n>: ")
 	if strAnswer.lower() == "y": 
-		strChild2FirstName = raw_input("Childs first name: ")
-		strChild2LastName = raw_input("Childs last name: ")
-		strChild2Year = raw_input("Childs year of birth: ")
-		strChild2Month = raw_input("Childs month of birth: ")
-		strChild2Day = raw_input("Childs day of birth: ")
-		strChild2Last4 = raw_input("Childs last four digits (swe personnr): ")
+		strChild2FirstName = input("Childs first name: ")
+		strChild2LastName = input("Childs last name: ")
+		strChild2Year = input("Childs year of birth: ")
+		strChild2Month = input("Childs month of birth: ")
+		strChild2Day = input("Childs day of birth: ")
+		strChild2Last4 = input("Childs last four digits (swe personnr): ")
 
 		strAnswer = "n"
-		strAnswer = raw_input("Another child? <y/n>: ")
+		strAnswer = input("Another child? <y/n>: ")
 		if strAnswer.lower() == "y": 
-			strChild3FirstName = raw_input("Childs first name: ")
-			strChild3LastName = raw_input("Childs last name: ")
-			strChild3Year = raw_input("Childs year of birth: ")
-			strChild3Month = raw_input("Childs month of birth: ")
-			strChild3Day = raw_input("Childs day of birth: ")
-			strChild3Last4 = raw_input("Childs last four digits (swe personnr): ")
+			strChild3FirstName = input("Childs first name: ")
+			strChild3LastName = input("Childs last name: ")
+			strChild3Year = input("Childs year of birth: ")
+			strChild3Month = input("Childs month of birth: ")
+			strChild3Day = input("Childs day of birth: ")
+			strChild3Last4 = input("Childs last four digits (swe personnr): ")
 
 while strAnswer != "":
-	strAnswer = raw_input("Add more words! Idols etc..: ")
+	strAnswer = input("Add more words! Idols etc..: ")
 	if strAnswer.lower() != "":
 		if strAnswer not in lstrCustomWords:
 			lstrCustomWords.append(strAnswer)
@@ -243,7 +243,7 @@ for x in lstrNames:
 		lstrMain.append(x + y)
 
 # Remove duplicates
-strAnswer = raw_input("Remove duplicates? Will take a LONG time... <y/n>: ")
+strAnswer = input("Remove duplicates? Will take a LONG time... <y/n>: ")
 if strAnswer.lower() == "y":
 	lstrMain = remove(lstrMain)
 	sys.stdout.write("\n")
